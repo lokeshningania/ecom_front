@@ -1,0 +1,16 @@
+.container{
+    margin: 2rem;
+
+}
+
+.inputerrors{
+    color: red;
+    font-size: smaller;
+   margin: 15px;
+    
+
+}
+
+.form-control{
+   margin: 0; 
+}
