@@ -1,11 +1,11 @@
-//import SignupForm from './components/Authentication/Customers/Signup/signup'
-import LoginForm from './components/Authentication/Customers/Login/login'
+import SignupForm from './components/Authentication/Customers/Signup/signup'
+//import LoginForm from './components/Authentication/Customers/Login/login'
 
 
 function App() {
   return (
     <div className="App">
-      <LoginForm />
+      <SignupForm />
     </div>
   );
 }

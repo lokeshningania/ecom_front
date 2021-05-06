@@ -40,7 +40,7 @@ class LoginForm extends Component {
         if(this.state.username ===''){
             this.setState({usernameerr: '* Please enter username'})
         }
-        
+
     }
 render(){
     return(
@@ -49,6 +49,8 @@ render(){
                 <form onSubmit={this.onSubmit}>
                     <input type='text'
                         placeholder = 'Username'
+                        onChange = {this.changeuserame}
+                        value = {this.state.username}
                         className = 'form-control form -group'/>
                     <span className='inputerrors'> {this.state.usernameerr} </span>
                     <input  type= 'password' 

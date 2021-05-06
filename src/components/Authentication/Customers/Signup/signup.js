@@ -2,15 +2,17 @@ import React , {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './signup.css'
 import axios from 'axios'
-import {validEmail , validPassword, validName} from '../../../helpers/regex'
+import {validEmail , validPassword} from '../../../helpers/regex'
 /*import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'*/
 class SignupForm extends Component{
     constructor(){
         super()
         this.state = {
-            fullName : '' ,
-            nameerr: '' ,
+            firstname : '' ,
+            fnameerr: '' ,
+            lastname : '' ,
+            lnameerr: '' ,
             username: '',
             usernameerr: '',
             email: '',
@@ -21,23 +23,32 @@ class SignupForm extends Component{
             pwderr:'',
             isValid: 'false' 
         }
-        this.changeFullName = this.changeFullName.bind(this)
-        this.changeuserame = this.changeuserame.bind(this)
+        this.changefirstname = this.changefirstname.bind(this)
+        this.changelastname = this.changelastname.bind(this)
+        this.changeusername = this.changeusername.bind(this)
         this.changeEmail = this.changeEmail.bind(this)
         this.changephone = this.changephone.bind(this)
         this.changepassword = this.changepassword.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
     }
 
-    changeFullName(event){
+    changefirstname(event){
         this.setState({
-            fullName: event.target.value
+            firstname: event.target.value ,
+            fnameerr:''
+        })
+    }
+    changelastname(event){
+        this.setState({
+            lastname: event.target.value ,
+            lnameerr:''
         })
     }
 
-    changeuserame(event){
+    changeusername(event){
         this.setState({
-            username: event.target.value
+            username: event.target.value ,
+            usernameerr:''
         })
     }
     changeEmail(event){
@@ -49,7 +60,8 @@ class SignupForm extends Component{
     changephone(event){
         
             this.setState({
-                phone: event.target.value
+                phone: event.target.value,
+                phoneerr:''
             })
         
         
@@ -82,14 +94,14 @@ class SignupForm extends Component{
                 this.setState({emailerr: '* Email field should not be empty'})
             }
             else{
-                this.setState({emailerr: '* This is not a alid email address'})
+                this.setState({emailerr: '* This is not a valid email address'})
     
             }
             
          }
-         if(!validName.test(this.state.fullName )){
+         /*if(!validName.test(this.state.fullname )){
             this.setState({nameerr: '* Please enter valid name'})
-        }
+            }*/
         if(this.state.phone ===''){
             this.setState({phoneerr: '* Please enter your phone number'})
         }
@@ -97,25 +109,31 @@ class SignupForm extends Component{
             this.setState({usernameerr: '* Please enter username'})
         }
         const registered = {
-            fullName:this.state.fullName ,
+            firstname:this.state.firstname ,
+            lastname:this.state.lastname ,
             username: this.state.username ,
             email:this.state.email,
             phone: this.state.phone,
             password: this.state.password
         }
         
-        if(this.state.pwderr === '' && this.state.emailerr === '' && this.state.phoneerr === '' && this.state.nameerr === '' && this.state.usernameerr === ''){
-            this.setState({isValid: 'true'})
-            console.log('working')
+        if(this.state.pwderr === '' && this.state.emailerr === '' && this.state.phoneerr === '' && this.state.fnameerr === '' && this.state.lnameerr === '' && this.state.usernameerr === ''){
+            this.setState({
+                isValid: 'true'
+            })
+            console.log(this.state.isValid)
         }
+
+        
 
         if(this.state.isValid === 'true'){
             console.log('submit')
-            axios.post('http://localhost:4000/app/signup' , registered)
+            axios.post('http://localhost:4001/customer/signup' , registered)
             .then(response => console.log(response.data))
 
             this.setState({
-                fullName : '' ,
+                firstname : '' ,
+                lastname : '' ,
                 username: '',
                 email: '',
                 phone: '',
@@ -131,16 +149,24 @@ class SignupForm extends Component{
                 <div className='form-div'>
                     <form onSubmit={this.onSubmit}>
                         <input  type= 'text' 
-                        placeholder = 'Full Name'
-                        onChange = {this.changeFullName}
-                        value = {this.state.fullName}
+                        placeholder = 'First Name'
+                        onChange = {this.changefirstname}
+                        value = {this.state.firstname}
                         className = ' form-control form-group'
                         />
-                        <span className='inputerrors'> {this.state.nameerr} </span>
+                        <span className='inputerrors'> {this.state.fnameerr} </span>
+
+                        <input  type= 'text' 
+                        placeholder = 'Last Name'
+                        onChange = {this.changelastname}
+                        value = {this.state.lastname}
+                        className = ' form-control form-group'
+                        />
+                        <span className='inputerrors'> {this.state.lnameerr} </span>
 
                         <input  type= 'text' 
                         placeholder = 'Username'
-                        onChange = {this.changeuserame}
+                        onChange = {this.changeusername}
                         value = {this.state.username}
                         className = ' form-control form-group'
                         />
